@@ -1,0 +1,24 @@
+# This will pull image from dockerhub
+FROM python:3.9-alpine3.17
+# Execute the command mkdir
+RUN mkdir app
+# copy files/folders
+#if optimization can be done
+COPY templates  /app/templates  
+COPY app.py /app/app.py
+COPY requirements.txt /app/requirements.txt
+# sets the working directory
+WORKDIR /app
+# runs the command 
+RUN pip install -r requirements.txt
+# run application
+CMD [ "python", "app.py" ]
+
+
+
+
+
+#2nd stsge
+#need to convert 1st to binary artifact
+#use ubuntu alpine image which let use curl command
+#

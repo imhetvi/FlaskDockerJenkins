@@ -1,0 +1,19 @@
+FROM python:3.9.16-bullseye as builder
+RUN mkdir app
+COPY app.py /app/app.py
+COPY requirements.txt /app/requirements.txt
+WORKDIR /app
+
+ENV PYTHONPATH=/app
+RUN pip install -r requirements.txt
+RUN pip install pyinstaller==5.8.0
+
+RUN pyinstaller /app/app.py --onefile
+RUN mv /app/dist/app /app/dist/app_docker.binary
+
+FROM python:3.9.16-bullseye
+RUN mkdir app
+COPY templates  /app/templates
+COPY --from=builder /app/dist/app_docker.binary /app
+WORKDIR /app
+CMD ["/app/app_docker.binary"]
