@@ -12,5 +12,10 @@ node{
 			bat "docker run -it -d -p 5000:5000 --name flask-app-cont flask-app:1.0"
 		}
 	}
+	stage("docker run"){
+		script{
+			bat "docker exec -it flask-app-cont bash"
+		}
+	}
 }
 
